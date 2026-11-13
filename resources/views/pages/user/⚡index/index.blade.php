@@ -1,5 +1,5 @@
 <div class="space-y-6">
-    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+    <div class="flex justify-between items-center gap-3">
         <div>
             <h1 class="text-lg sm:text-xl font-bold text-slate-900">Kelola Pengguna</h1>
             <nav class="flex items-center gap-1.5 text-sm text-slate-500 mt-1">
@@ -12,8 +12,16 @@
                 <span class="text-slate-700 font-medium">Pengguna</span>
             </nav>
         </div>
-        <x-button color="emerald" sm href="{{ route('user.create') }}" wire:navigate>
-            <x-ti-plus class="size-4 mr-1 inline" /> Tambah Pengguna
+        <x-button
+            color="emerald"
+            sm
+            href="{{ route('user.create') }}"
+            wire:navigate
+            title="Tambah Pengguna"
+            aria-label="Tambah Pengguna"
+        >
+            <x-ti-plus class="size-4 sm:mr-1 inline" aria-hidden="true" />
+            <span class="hidden sm:inline">Tambah Pengguna</span>
         </x-button>
     </div>
 
@@ -52,9 +60,9 @@
         <x-table.thead class="bg-slate-100" :sortDirection="$sortDirection" :sortField="$sortField">
             <x-table.th label="No" width="5%" />
             <x-table.th label="Nama" sort="name" width="25%" />
-            <x-table.th label="Jabatan / Peran Keluarga" width="20%" />
+            <x-table.th label="Peran" width="20%" />
             <x-table.th label="Email" sort="email" width="20%" />
-            <x-table.th label="Kantong" />
+            <x-table.th label="Transaksi" />
             <x-table.th label="Status" />
             <x-table.th label="Aksi" />
         </x-table.thead>
@@ -64,9 +72,9 @@
                 <tr class="bg-white hover:bg-slate-50 transition-colors" wire:key="user-{{ $d->id }}">
                     <td class="p-3 text-center text-slate-600 text-sm">{{ $perPage * ($this->dataTable->currentPage() - 1) + $index + 1 }}</td>
                     <td class="p-3 text-sm font-semibold text-slate-900">{{ $d->name }}</td>
-                    <td class="p-3 text-sm text-slate-700">{{ $d->jabatan ?? ($d->roles->pluck('name')->implode(', ') ?: '-') }}</td>
+                    <td class="p-3 text-sm text-slate-700">{{ \App\Enums\RolesEnum::tryFrom((string) $d->roles->first()?->name)?->label() ?? '-' }}</td>
                     <td class="p-3 text-sm text-slate-700">{{ $d->email }}</td>
-                    <td class="p-3 text-sm text-slate-700">{{ $d->wallets_count }} kantong</td>
+                    <td class="p-3 text-sm text-slate-700">{{ $d->laundry_transactions_count }} nota</td>
                     <td class="p-3">
                         @if ($d->status === 'active')
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">Aktif</span>

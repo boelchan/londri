@@ -19,8 +19,7 @@ new #[Title('Tambah Pengguna')] class extends Component
     public string $password = '';
     public string $password_confirmation = '';
     public ?string $phone = null;
-    public ?string $jabatan = 'Pemilik Dompet';
-    public string $role = RolesEnum::MEMBER->value;
+    public string $role = RolesEnum::CASHIER->value;
     public string $status = UserStatusEnum::ACTIVE->value;
 
     /**
@@ -33,7 +32,6 @@ new #[Title('Tambah Pengguna')] class extends Component
             'email' => 'required|email|max:191|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
             'phone' => 'nullable|string|max:30',
-            'jabatan' => 'nullable|string|max:80',
             'role' => 'required|string',
             'status' => 'required|in:active,inactive',
         ], [
@@ -50,7 +48,6 @@ new #[Title('Tambah Pengguna')] class extends Component
             'email' => $this->email,
             'password' => Hash::make($this->password),
             'phone' => $this->phone,
-            'jabatan' => $this->jabatan,
             'status' => $this->status,
         ]);
 
@@ -58,6 +55,6 @@ new #[Title('Tambah Pengguna')] class extends Component
 
         $this->toast()->success('Berhasil', 'Pengguna baru berhasil ditambahkan.')->flash()->send();
 
-        return to_route('user');
+        return to_route('user.index');
     }
 };

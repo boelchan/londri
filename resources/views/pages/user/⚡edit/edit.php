@@ -23,8 +23,7 @@ new #[Title('Ubah Pengguna')] class extends Component
     public ?string $password = null;
     public ?string $password_confirmation = null;
     public ?string $phone = null;
-    public ?string $jabatan = null;
-    public string $role = RolesEnum::MEMBER->value;
+    public string $role = RolesEnum::CASHIER->value;
     public string $status = UserStatusEnum::ACTIVE->value;
 
     /**
@@ -36,9 +35,8 @@ new #[Title('Ubah Pengguna')] class extends Component
         $this->name = $user->name;
         $this->email = $user->email;
         $this->phone = $user->phone;
-        $this->jabatan = $user->jabatan;
         $this->status = $user->status;
-        $this->role = (string) ($user->roles->first()?->name ?? RolesEnum::MEMBER->value);
+        $this->role = (string) ($user->roles->first()?->name ?? RolesEnum::CASHIER->value);
     }
 
     /**
@@ -51,7 +49,6 @@ new #[Title('Ubah Pengguna')] class extends Component
             'email' => 'required|email|max:191|unique:users,email,' . $this->id,
             'password' => 'nullable|string|min:6|confirmed',
             'phone' => 'nullable|string|max:30',
-            'jabatan' => 'nullable|string|max:80',
             'role' => 'required|string',
             'status' => 'required|in:active,inactive',
         ]);
@@ -63,7 +60,6 @@ new #[Title('Ubah Pengguna')] class extends Component
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
-            'jabatan' => $this->jabatan,
             'status' => $this->status,
         ]);
 
@@ -83,6 +79,6 @@ new #[Title('Ubah Pengguna')] class extends Component
 
         $this->toast()->success('Berhasil', 'Data pengguna berhasil diperbarui.')->flash()->send();
 
-        return to_route('user');
+        return to_route('user.index');
     }
 };

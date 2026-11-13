@@ -39,7 +39,7 @@ new #[Title('Kelola Pengguna')] class extends Component
     public function dataTable(): LengthAwarePaginator
     {
         return User::with('roles')
-            ->withCount('wallets')
+            ->withCount('laundryTransactions')
             ->when($this->search_name !== '', fn ($q) => $q->where('name', 'like', '%' . $this->search_name . '%'))
             ->when($this->search_email !== '', fn ($q) => $q->where('email', 'like', '%' . $this->search_email . '%'))
             ->when($this->search_role, fn ($q) => $q->whereHas('roles', fn ($rq) => $rq->where('name', $this->search_role)))

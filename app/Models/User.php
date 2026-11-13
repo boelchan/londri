@@ -23,8 +23,6 @@ use Spatie\Permission\Traits\HasRoles;
     'password',
     'phone',
     'status',
-    'jabatan',
-    'email_verified_at',
 ])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
@@ -40,59 +38,38 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
     }
 
     /**
-     * Relasi ke daftar kantong keuangan milik pengguna.
+     * Relasi ke seluruh transaksi laundry yang diproses oleh pengguna.
      *
-     * @return HasMany<Wallet, $this>
+     * @return HasMany<LaundryTransaction, $this>
      */
-    public function wallets(): HasMany
+    public function laundryTransactions(): HasMany
     {
-        return $this->hasMany(Wallet::class, 'user_id');
+        return $this->hasMany(LaundryTransaction::class, 'user_id');
     }
 
     /**
-     * Relasi ke seluruh transaksi milik pengguna.
+     * Relasi ke riwayat perubahan harga yang dilakukan oleh admin.
      *
-     * @return HasMany<Transaction, $this>
+     * @return HasMany<PriceHistory, $this>
      */
-    public function transactions(): HasMany
+    public function priceHistories(): HasMany
     {
-        return $this->hasMany(Transaction::class, 'user_id');
+        return $this->hasMany(PriceHistory::class, 'user_id');
     }
 
     /**
-     * Relasi ke daftar transfer antar kantong milik pengguna.
+     * Relasi ke riwayat mutasi poin yang dicatat oleh pengguna.
      *
-     * @return HasMany<Transfer, $this>
+     * @return HasMany<PointHistory, $this>
      */
-    public function transfers(): HasMany
+    public function pointHistories(): HasMany
     {
-        return $this->hasMany(Transfer::class, 'user_id');
-    }
-
-    /**
-     * Relasi ke kategori transaksi kustom milik pengguna.
-     *
-     * @return HasMany<TransactionCategory, $this>
-     */
-    public function transactionCategories(): HasMany
-    {
-        return $this->hasMany(TransactionCategory::class, 'user_id');
-    }
-
-    /**
-     * Relasi ke catatan log aktivitas kantong.
-     *
-     * @return HasMany<WalletActivityLog, $this>
-     */
-    public function walletActivityLogs(): HasMany
-    {
-        return $this->hasMany(WalletActivityLog::class, 'user_id');
+        return $this->hasMany(PointHistory::class, 'user_id');
     }
 
     /**
@@ -110,10 +87,18 @@ class User extends Authenticatable
     }
 
     /**
-     * Memeriksa apakah pengguna memiliki peran Administrator.
+     * Memeriksa apakah pengguna memiliki peran Pemilik (Admin).
      */
     public function isAdmin(): bool
     {
         return $this->hasRole('administrator');
+    }
+
+    /**
+     * Memeriksa apakah pengguna memiliki peran Kasir.
+     */
+    public function isCashier(): bool
+    {
+        return $this->hasRole('cashier');
     }
 }

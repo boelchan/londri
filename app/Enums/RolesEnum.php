@@ -7,7 +7,7 @@ namespace App\Enums;
 enum RolesEnum: string
 {
     case ADMINISTRATOR = 'administrator';
-    case MEMBER = 'member';
+    case CASHIER = 'cashier';
 
     /**
      * Mengambil label peran pengguna dalam Bahasa Indonesia.
@@ -15,8 +15,8 @@ enum RolesEnum: string
     public function label(): string
     {
         return match ($this) {
-            self::ADMINISTRATOR => 'Administrator',
-            self::MEMBER => 'Pengguna Dompet',
+            self::ADMINISTRATOR => 'Pemilik (Admin)',
+            self::CASHIER => 'Kasir',
         };
     }
 

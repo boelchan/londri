@@ -8,9 +8,9 @@
     <link type="image/svg+xml" href="{{ asset('favicon/favicon.svg') }}" rel="icon" />
     <link href="{{ asset('favicon/favicon.ico') }}" rel="shortcut icon" />
     <link href="{{ asset('favicon/apple-touch-icon.png') }}" rel="apple-touch-icon" sizes="180x180" />
-    <meta name="apple-mobile-web-app-title" content="Bank BINI" />
+    <meta name="apple-mobile-web-app-title" content="LondriKita" />
 
-    <title>{{ isset($title) ? $title . ' - Bank BINI' : 'Bank BINI - Kantong Keuangan Keluarga' }}</title>
+    <title>{{ isset($title) ? $title . ' - LondriKita' : 'LondriKita - Sistem Penyelenggaraan Laundry' }}</title>
 
     <!-- Tipografi: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,12 +24,11 @@
     @stack('styles')
 </head>
 
-<body class="bg-rose-50 text-slate-900 antialiased font-sans">
-    <x-toast />
-    <x-dialog />
-
-    {{-- Latar corak sapi dipisah dari konten dan dikunci ke viewport agar tidak ikut bergulir. --}}
-    <div aria-hidden="true" class="cow-print pointer-events-none fixed inset-0 z-0"></div>
+<body class="bg-slate-50 text-slate-900 antialiased font-sans">
+    <div class="no-print">
+        <x-toast />
+        <x-dialog />
+    </div>
 
     <div
         class="relative z-10 min-h-screen w-full flex flex-col lg:flex-row"
@@ -52,7 +51,7 @@
     >
         <!-- Mobile Sidebar Overlay Backdrop -->
         <div
-            class="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-xs transition-opacity lg:hidden"
+            class="no-print fixed inset-0 z-40 bg-slate-900/40 transition-opacity lg:hidden"
             x-show="mobileSidebarOpen"
             x-transition:enter="ease-out duration-300"
             x-transition:enter-start="opacity-0"
@@ -64,12 +63,11 @@
             x-cloak
         ></div>
 
-        <!-- Sidebar Navigation (2 Menu Utama: Dashboard & Transaksi) -->
         @if (Auth::check())
             <aside
                 id="sidebar"
                 aria-label="Navigasi Utama"
-                class="fixed inset-y-0 left-0 z-50 hidden flex-col bg-slate-100 border-r border-slate-200 p-3 transition-all duration-300 ease-in-out lg:static lg:flex lg:h-screen lg:sticky lg:top-0 lg:z-30 select-none overflow-hidden"
+                class="no-print fixed inset-y-0 left-0 z-50 flex flex-col bg-slate-100 border-r border-slate-200 p-3 transition-all duration-300 ease-in-out lg:static lg:flex lg:h-screen lg:sticky lg:top-0 lg:z-30 select-none overflow-hidden"
                 :class="[
                     mobileSidebarOpen ? 'translate-x-0 shadow-lg w-72 max-w-[85vw]' : '-translate-x-full lg:translate-x-0',
                     sidebarOpen ? 'lg:w-64 lg:p-3.5' : 'lg:w-18 lg:p-2.5'
@@ -79,22 +77,19 @@
                     {{-- Header saat Sidebar Terbuka --}}
                     <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-200/80" x-show="sidebarOpen || window.innerWidth < 1024">
                         <a href="{{ route('home') }}" class="flex items-center gap-2.5 min-w-0 rounded-xl p-1.5 hover:bg-white/80 transition-colors" wire:navigate @click="closeMobile()">
-                            <div class="flex size-9 shrink-0 items-center justify-center rounded-xl border border-rose-200 bg-rose-100 text-rose-700 shadow-2xs">
-                                <x-ti-wallet class="size-5" aria-hidden="true" />
+                            <div class="flex size-9 shrink-0 items-center justify-center rounded-xl border border-emerald-200 bg-emerald-100 text-emerald-700 shadow-2xs">
+                                <x-ti-wash-machine class="size-5" aria-hidden="true" />
                             </div>
                             <div class="leading-tight truncate">
-                                <span class="flex items-center gap-1 text-sm font-bold text-slate-900 truncate">
-                                    <span>Bank BINI</span>
-                                    <x-ti-heart class="size-3.5 text-rose-500 shrink-0" aria-hidden="true" />
-                                </span>
-                                <span class="block text-xs text-slate-600 truncate">Kantong Manis Keluarga</span>
+                                <span class="block text-sm font-bold text-slate-900 truncate">LondriKita</span>
+                                <span class="block text-xs text-slate-600 truncate">Kasir &amp; Manajemen</span>
                             </div>
                         </a>
 
                         <button
                             type="button"
                             @click="closeMobile()"
-                            class="inline-flex size-8 shrink-0 items-center justify-center rounded-xl text-slate-600 hover:bg-slate-200/70 hover:text-slate-900 transition-colors focus-visible:outline-2 focus-visible:outline-rose-600 lg:hidden"
+                            class="inline-flex size-8 shrink-0 items-center justify-center rounded-xl text-slate-600 hover:bg-slate-200/70 hover:text-slate-900 transition-colors focus-visible:outline-2 focus-visible:outline-emerald-600 lg:hidden"
                             title="Tutup Menu"
                             aria-label="Tutup Menu"
                         >
@@ -103,7 +98,7 @@
                         <button
                             type="button"
                             @click="toggleSidebar()"
-                            class="hidden lg:inline-flex size-8 shrink-0 items-center justify-center rounded-xl text-slate-600 hover:bg-slate-200/70 hover:text-slate-900 transition-colors focus-visible:outline-2 focus-visible:outline-rose-600"
+                            class="hidden lg:inline-flex size-8 shrink-0 items-center justify-center rounded-xl text-slate-600 hover:bg-slate-200/70 hover:text-slate-900 transition-colors focus-visible:outline-2 focus-visible:outline-emerald-600"
                             title="Perkecil Sidebar"
                             aria-label="Perkecil Sidebar"
                         >
@@ -115,20 +110,20 @@
                     <div class="hidden lg:flex flex-col items-center gap-2 pb-3 mb-3 border-b border-slate-200/80" x-show="!sidebarOpen" x-cloak>
                         <a
                             href="{{ route('home') }}"
-                            class="flex size-9 shrink-0 items-center justify-center rounded-xl border border-rose-200 bg-rose-100 text-rose-700 hover:bg-rose-200/70 transition-colors"
+                            class="flex size-9 shrink-0 items-center justify-center rounded-xl border border-emerald-200 bg-emerald-100 text-emerald-700 hover:bg-emerald-200/70 transition-colors"
                             wire:navigate
-                            x-tooltip="Bank BINI"
+                            x-tooltip="LondriKita"
                             data-position="right"
                             data-tooltip-delay="flash"
                             x-bind:data-tooltip-disabled="sidebarOpen || mobileSidebarOpen"
-                            aria-label="Bank BINI"
+                            aria-label="LondriKita"
                         >
-                            <x-ti-wallet class="size-5" aria-hidden="true" />
+                            <x-ti-wash-machine class="size-5" aria-hidden="true" />
                         </a>
                         <button
                             type="button"
                             @click="toggleSidebar()"
-                            class="inline-flex size-8 items-center justify-center rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-200/70 transition-colors focus-visible:outline-2 focus-visible:outline-rose-600"
+                            class="inline-flex size-8 items-center justify-center rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-200/70 transition-colors focus-visible:outline-2 focus-visible:outline-emerald-600"
                             x-tooltip="Perbesar Sidebar"
                             data-position="right"
                             data-tooltip-delay="flash"
@@ -139,30 +134,73 @@
                         </button>
                     </div>
 
-                    {{-- 3 Menu Utama: Home, Kantong, & Rekap --}}
-                    <nav class="flex-1 overflow-y-auto space-y-1" aria-label="Menu Utama">
-                        <ul class="flex flex-col gap-1.5 w-full ps-0">
+                    <nav class="flex-1 overflow-y-auto space-y-4" aria-label="Menu Utama">
+                        <ul class="flex flex-col gap-1 w-full ps-0">
                             <x-sidebar.item
                                 href="{{ route('home') }}"
                                 icon="home"
-                                title="Home"
+                                title="Beranda"
                                 :active="request()->routeIs('home')"
                             />
 
                             <x-sidebar.item
-                                href="{{ route('pockets.index') }}"
-                                icon="wallet"
-                                title="Kantong"
-                                :active="request()->routeIs('pockets.*')"
+                                href="{{ route('pos') }}"
+                                icon="receipt-2"
+                                title="Kasir (Transaksi)"
+                                :active="request()->routeIs('pos')"
+                            />
+
+                            <x-sidebar.item
+                                href="{{ route('transactions.index') }}"
+                                icon="list-details"
+                                title="Riwayat Transaksi"
+                                :active="request()->routeIs('transactions.*')"
+                            />
+
+                            <x-sidebar.item
+                                href="{{ route('customers.index') }}"
+                                icon="users"
+                                title="Pelanggan & Poin"
+                                :active="request()->routeIs('customers.*')"
                             />
 
                             <x-sidebar.item
                                 href="{{ route('recap.index') }}"
                                 icon="report-analytics"
                                 title="Rekap"
-                                :active="request()->routeIs('recap.*') || request()->routeIs('transactions.*')"
+                                :active="request()->routeIs('recap.*')"
                             />
                         </ul>
+
+                        @if (Auth::user()?->isAdmin())
+                            <div>
+                                <p class="px-3 mb-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500" x-show="sidebarOpen">
+                                    Panel Pemilik
+                                </p>
+                                <ul class="flex flex-col gap-1 w-full ps-0">
+                                    <x-sidebar.item
+                                        href="{{ route('expenses.index') }}"
+                                        icon="receipt-off"
+                                        title="Pengeluaran Kantor"
+                                        :active="request()->routeIs('expenses.*')"
+                                    />
+
+                                    <x-sidebar.item
+                                        href="{{ route('catalog.index') }}"
+                                        icon="tags"
+                                        title="Kategori & Layanan"
+                                        :active="request()->routeIs('catalog.*')"
+                                    />
+
+                                    <x-sidebar.item
+                                        href="{{ route('user.index') }}"
+                                        icon="user-cog"
+                                        title="Kelola Pengguna"
+                                        :active="request()->routeIs('user.*')"
+                                    />
+                                </ul>
+                            </div>
+                        @endif
                     </nav>
 
                     {{-- Kartu Profil Pengguna & Tombol Keluar --}}
@@ -171,7 +209,7 @@
                             <button
                                 type="button"
                                 x-ref="userMenuTrigger"
-                                class="flex w-full items-center rounded-xl p-2 bg-white hover:bg-rose-50/40 border border-slate-200/90 shadow-2xs transition-all text-left focus-visible:outline-2 focus-visible:outline-rose-600"
+                                class="flex w-full items-center rounded-xl p-2 bg-white hover:bg-emerald-50/40 border border-slate-200/90 shadow-2xs transition-all text-left focus-visible:outline-2 focus-visible:outline-emerald-600"
                                 :class="sidebarOpen ? 'justify-between' : 'lg:justify-center'"
                                 @click="sidebarUserMenuOpen = !sidebarUserMenuOpen"
                                 x-tooltip="{{ e(Auth::user()?->name) }}"
@@ -181,12 +219,12 @@
                                 aria-label="Menu akun {{ Auth::user()?->name }}"
                             >
                                 <div class="flex items-center gap-2.5 min-w-0" :class="sidebarOpen ? '' : 'lg:justify-center'">
-                                    <div class="flex size-8 shrink-0 items-center justify-center rounded-xl bg-rose-100 text-rose-800 border border-rose-200 font-bold text-xs uppercase">
+                                    <div class="flex size-8 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800 border border-emerald-200 font-bold text-xs uppercase">
                                         {{ substr(auth()->user()->name, 0, 2) }}
                                     </div>
                                     <div class="truncate leading-tight" :class="sidebarOpen ? 'block' : 'lg:hidden'">
                                         <p class="text-sm font-semibold text-slate-900 truncate">{{ Auth::user()?->name }}</p>
-                                        <p class="text-xs text-slate-500 truncate">{{ Auth::user()?->email }}</p>
+                                        <p class="text-xs text-slate-500 truncate">{{ Auth::user()?->isAdmin() ? 'Pemilik (Admin)' : 'Kasir' }}</p>
                                     </div>
                                 </div>
                                 <div :class="sidebarOpen ? 'block' : 'lg:hidden'">
@@ -207,72 +245,82 @@
         </form>
 
         <div class="flex flex-1 flex-col min-w-0">
+            @auth
+                {{-- Header Mobile dengan tombol buka menu --}}
+                <header class="no-print sticky top-0 z-20 flex items-center justify-between border-b border-slate-200 bg-white px-4 py-2.5 lg:hidden">
+                    <a href="{{ route('home') }}" class="flex items-center gap-2" wire:navigate>
+                        <div class="flex size-8 items-center justify-center rounded-lg border border-emerald-200 bg-emerald-100 text-emerald-700">
+                            <x-ti-wash-machine class="size-4.5" aria-hidden="true" />
+                        </div>
+                        <span class="text-sm font-bold text-slate-900">LondriKita</span>
+                    </a>
+                    <button
+                        type="button"
+                        @click="toggleSidebar()"
+                        class="inline-flex min-h-11 min-w-11 items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-3 text-xs font-semibold text-slate-700 hover:bg-slate-100"
+                        aria-label="Buka Menu"
+                    >
+                        <x-ti-menu-2 class="size-4" aria-hidden="true" />
+                        <span>Menu</span>
+                    </button>
+                </header>
+            @endauth
+
             <!-- Konten Utama -->
             <main id="main-content" class="w-full flex-1 overflow-y-auto flex flex-col min-h-screen lg:min-h-0 pb-20 lg:pb-0">
                 <div class="flex-1 p-4 sm:p-6 lg:p-8 max-w-6xl w-full mx-auto">
                     {{ $slot }}
                 </div>
 
-                <footer class="mt-auto border-t border-rose-200/80 bg-rose-100/90 py-3.5 px-4 sm:px-6 lg:px-8 text-center text-xs text-rose-800 select-none">
+                <footer class="no-print mt-auto border-t border-slate-200 bg-white py-3.5 px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500 select-none">
                     <p class="leading-relaxed">
-                        &copy; {{ date('Y') }} <strong class="text-rose-900">Bank BINI</strong> &bull; Kantong Keuangan Keluarga
+                        &copy; {{ date('Y') }} <strong class="text-slate-700">LondriKita</strong> &bull; Sistem Penyelenggaraan Laundry
                     </p>
                 </footer>
             </main>
 
-            <!-- Bottom Navigation Khusus Mobile (3 Menu Utama + Tombol Menu) -->
+            <!-- Bottom Navigation Khusus Mobile -->
             @auth
                 <nav
                     aria-label="Navigasi Bawah Ponsel"
-                    class="fixed bottom-0 inset-x-0 z-30 border-t border-slate-200 bg-white/95 backdrop-blur-md px-3 py-1.5 lg:hidden select-none shadow-sm"
+                    class="no-print fixed bottom-0 inset-x-0 z-30 border-t border-slate-200 bg-white px-3 py-1.5 lg:hidden select-none shadow-sm"
                 >
                     <div class="grid grid-cols-4 gap-1.5 max-w-md mx-auto">
                         <a
                             href="{{ route('home') }}"
                             wire:navigate
-                            class="flex flex-col items-center justify-center gap-1 min-h-12 rounded-xl px-2 py-1.5 text-xs font-semibold transition-colors {{ request()->routeIs('home') ? 'text-rose-800 bg-rose-100 border border-rose-300' : 'text-slate-600 hover:text-slate-900' }}"
+                            class="flex flex-col items-center justify-center gap-1 min-h-12 rounded-xl px-2 py-1.5 text-xs font-semibold transition-colors {{ request()->routeIs('home') ? 'text-emerald-800 bg-emerald-50 border border-emerald-200' : 'text-slate-600 hover:text-slate-900' }}"
                         >
-                            <x-ti-home class="size-5 {{ request()->routeIs('home') ? 'text-rose-700' : 'text-slate-500' }}" aria-hidden="true" />
-                            <span>Home</span>
+                            <x-ti-home class="size-5 {{ request()->routeIs('home') ? 'text-emerald-700' : 'text-slate-500' }}" aria-hidden="true" />
+                            <span>Beranda</span>
                         </a>
 
                         <a
-                            href="{{ route('pockets.index') }}"
+                            href="{{ route('pos') }}"
                             wire:navigate
-                            class="flex flex-col items-center justify-center gap-1 min-h-12 rounded-xl px-2 py-1.5 text-xs font-semibold transition-colors {{ request()->routeIs('pockets.*') ? 'text-rose-800 bg-rose-100 border border-rose-300' : 'text-slate-600 hover:text-slate-900' }}"
+                            class="flex flex-col items-center justify-center gap-1 min-h-12 rounded-xl px-2 py-1.5 text-xs font-semibold transition-colors {{ request()->routeIs('pos') ? 'text-emerald-800 bg-emerald-50 border border-emerald-200' : 'text-slate-600 hover:text-slate-900' }}"
                         >
-                            <x-ti-wallet class="size-5 {{ request()->routeIs('pockets.*') ? 'text-rose-700' : 'text-slate-500' }}" aria-hidden="true" />
-                            <span>Kantong</span>
+                            <x-ti-receipt-2 class="size-5 {{ request()->routeIs('pos') ? 'text-emerald-700' : 'text-slate-500' }}" aria-hidden="true" />
+                            <span>Kasir</span>
                         </a>
 
                         <a
-                            href="{{ route('recap.index') }}"
+                            href="{{ route('transactions.index') }}"
                             wire:navigate
-                            class="flex flex-col items-center justify-center gap-1 min-h-12 rounded-xl px-2 py-1.5 text-xs font-semibold transition-colors {{ request()->routeIs('recap.*') || request()->routeIs('transactions.*') ? 'text-rose-800 bg-rose-100 border border-rose-300' : 'text-slate-600 hover:text-slate-900' }}"
+                            class="flex flex-col items-center justify-center gap-1 min-h-12 rounded-xl px-2 py-1.5 text-xs font-semibold transition-colors {{ request()->routeIs('transactions.*') ? 'text-emerald-800 bg-emerald-50 border border-emerald-200' : 'text-slate-600 hover:text-slate-900' }}"
                         >
-                            <x-ti-report-analytics class="size-5 {{ request()->routeIs('recap.*') || request()->routeIs('transactions.*') ? 'text-rose-700' : 'text-slate-500' }}" aria-hidden="true" />
-                            <span>Rekap</span>
+                            <x-ti-list-details class="size-5 {{ request()->routeIs('transactions.*') ? 'text-emerald-700' : 'text-slate-500' }}" aria-hidden="true" />
+                            <span>Transaksi</span>
                         </a>
 
-                        <div class="relative w-full" x-data="{ userNavMenuOpen: false }">
-                            <button
-                                type="button"
-                                x-ref="userNavTrigger"
-                                @click="userNavMenuOpen = !userNavMenuOpen"
-                                class="flex w-full flex-col items-center justify-center gap-1 min-h-12 rounded-xl px-2 py-1.5 text-xs font-semibold transition-colors cursor-pointer"
-                                :class="userNavMenuOpen ? 'text-rose-800 bg-rose-100 border border-rose-300' : 'text-slate-600 hover:text-slate-900'"
-                                aria-label="Menu akun {{ Auth::user()?->name }}"
-                                aria-haspopup="menu"
-                                x-bind:aria-expanded="userNavMenuOpen ? 'true' : 'false'"
-                            >
-                                <span class="flex size-5 shrink-0 items-center justify-center rounded-full border border-rose-200 bg-rose-100 text-xs font-bold uppercase leading-none text-rose-800">
-                                    {{ substr(auth()->user()->name, 0, 2) }}
-                                </span>
-                                <span>Akun</span>
-                            </button>
-
-                            <x-account-menu position="top-end" trigger="$refs.userNavTrigger" state="userNavMenuOpen" />
-                        </div>
+                        <a
+                            href="{{ route('customers.index') }}"
+                            wire:navigate
+                            class="flex flex-col items-center justify-center gap-1 min-h-12 rounded-xl px-2 py-1.5 text-xs font-semibold transition-colors {{ request()->routeIs('customers.*') ? 'text-emerald-800 bg-emerald-50 border border-emerald-200' : 'text-slate-600 hover:text-slate-900' }}"
+                        >
+                            <x-ti-users class="size-5 {{ request()->routeIs('customers.*') ? 'text-emerald-700' : 'text-slate-500' }}" aria-hidden="true" />
+                            <span>Pelanggan</span>
+                        </a>
                     </div>
                 </nav>
             @endauth

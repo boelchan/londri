@@ -56,15 +56,6 @@
     display: none !important;
 }
 
-/* Latar corak sapi pastel: bercak tidak beraturan dengan ukuran berbeda, dipasang pada lapisan tetap agar tidak bergerak saat halaman digulir. */
-.cow-print {
-    background-color: #fff5f6;
-    background-image: url('../images/cow-print.svg');
-    background-size: 640px 640px;
-    background-repeat: repeat;
-    background-position: 0 0;
-}
-
 /* Dropdown floating (select, date, time) & tooltip di-teleport ke body */
 [data-floating],
 [data-tsui-tooltip] {
@@ -78,6 +69,22 @@
     font-weight: 600;
     border: 1px solid #e2e8f0;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+@media print {
+    .no-print {
+        display: none !important;
+    }
+
+    body {
+        background: #ffffff !important;
+        color: #0f172a !important;
+    }
+
+    #main-content {
+        padding-bottom: 0 !important;
+        overflow: visible !important;
+    }
 }
 
 ::-webkit-scrollbar {
@@ -97,9 +104,4 @@
 
 ::-webkit-scrollbar-thumb:hover {
     background: #94a3b8;
-}
-
-* {
-    scrollbar-width: thin;
-    scrollbar-color: #cbd5e1 #f1f5f9;
 }

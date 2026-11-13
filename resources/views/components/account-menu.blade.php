@@ -8,7 +8,7 @@
 <template x-teleport="body">
     <div
         data-floating
-        class="absolute z-50 w-56 rounded-2xl border border-slate-200 bg-white p-1.5 shadow-md"
+        class="no-print absolute z-50 w-56 rounded-2xl border border-slate-200 bg-white p-1.5 shadow-md"
         x-show="{{ $state }}"
         x-anchor.{{ $position }}.offset.8="{{ $trigger }}"
         @click.outside="if (!{{ $trigger }}?.contains($event.target)) {{ $state }} = false"
@@ -33,7 +33,7 @@
                 wire:navigate
                 @click="{{ $state }} = false; closeMobile()"
             >
-                <x-ti-settings class="size-4 text-slate-500" aria-hidden="true" /> Profil & Kategori
+                <x-ti-user-circle class="size-4 text-slate-500" aria-hidden="true" /> Profil & Akun
             </a>
             <button
                 type="button"

@@ -5,7 +5,7 @@
             <x-ti-home class="size-4" />
         </a>
         <span>/</span>
-        <a href="{{ route('user') }}" class="hover:text-emerald-600 transition-colors" wire:navigate>Pengguna</a>
+        <a href="{{ route('user.index') }}" class="hover:text-emerald-600 transition-colors" wire:navigate>Pengguna</a>
         <span>/</span>
         <span class="text-slate-700 font-medium">Tambah Baru</span>
     </nav>
@@ -16,9 +16,8 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="space-y-4">
                         <x-input wire:model="name" label="Nama Lengkap *" placeholder="Masukkan nama lengkap" />
-                        <x-input type="email" wire:model="email" label="Alamat Email *" placeholder="nama@bankbini.id" />
+                        <x-input type="email" wire:model="email" label="Alamat Email *" placeholder="kasir@londri.id" />
                         <x-input wire:model="phone" label="Nomor WhatsApp / HP" placeholder="0812xxxxxxxx" />
-                        <x-input wire:model="jabatan" label="Peran di Keluarga" placeholder="Contoh: Istri Tercinta / Suami" />
                     </div>
 
                     <div class="space-y-4">
@@ -44,7 +43,7 @@
                 </div>
 
                 <x-slot:footer between>
-                    <x-button flat color="slate" href="{{ route('user') }}" wire:navigate>
+                    <x-button flat color="slate" href="{{ route('user.index') }}" wire:navigate>
                         Batal
                     </x-button>
                     <x-button submit color="emerald" loading="store">
