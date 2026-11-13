@@ -1,0 +1,105 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@import '../../vendor/tallstackui/tallstackui/css/v4.css';
+
+@plugin '@tailwindcss/forms';
+
+@source '../../vendor/tallstackui/tallstackui/**/*.php';
+
+@layer base {
+    a[href],
+    button:not(:disabled),
+    summary,
+    select:not(:disabled),
+    label[for],
+    input[type="checkbox"]:not(:disabled),
+    input[type="radio"]:not(:disabled),
+    [role="button"]:not([aria-disabled="true"]),
+    [role="tab"]:not([aria-disabled="true"]),
+    [role="switch"]:not([aria-disabled="true"]) {
+        cursor: pointer;
+    }
+
+    button:disabled,
+    select:disabled,
+    input:disabled,
+    textarea:disabled,
+    [aria-disabled="true"] {
+        cursor: not-allowed;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+/* Latar corak sapi pastel: bercak tidak beraturan dengan ukuran berbeda, dipasang pada lapisan tetap agar tidak bergerak saat halaman digulir. */
+.cow-print {
+    background-color: #fff5f6;
+    background-image: url('../images/cow-print.svg');
+    background-size: 640px 640px;
+    background-repeat: repeat;
+    background-position: 0 0;
+}
+
+/* Dropdown floating (select, date, time) & tooltip di-teleport ke body */
+[data-floating],
+[data-tsui-tooltip] {
+    z-index: 100;
+}
+
+/* Sidebar Menu Active State */
+.sidebar-link.active {
+    background-color: #ffffff;
+    color: #065f46;
+    font-weight: 600;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 #f1f5f9;
+}
