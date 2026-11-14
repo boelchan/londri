@@ -20,6 +20,9 @@ new #[Title('Riwayat Transaksi Laundry')] class extends Component
     public string $sortFieldDefault = 'created_at';
     public string $sortDirectionDefault = 'desc';
 
+    /** @var array<int, string> */
+    protected array $sortableFields = ['created_at', 'invoice_number', 'laundry_status', 'payment_status', 'grand_total'];
+
     #[Url]
     public string $search_invoice = '';
 
@@ -46,7 +49,7 @@ new #[Title('Riwayat Transaksi Laundry')] class extends Component
             }))
             ->when($this->search_laundry_status, fn ($q) => $q->where('laundry_status', $this->search_laundry_status))
             ->when($this->search_payment_status, fn ($q) => $q->where('payment_status', $this->search_payment_status))
-            ->orderBy($this->sortField, $this->sortDirection)
+            ->orderBy($this->safeSortField(), $this->safeSortDirection())
             ->paginate($this->perPage);
     }
 

@@ -17,6 +17,9 @@ new #[Title('Audit Trail Perubahan Harga')] class extends Component
     public string $sortFieldDefault = 'created_at';
     public string $sortDirectionDefault = 'desc';
 
+    /** @var array<int, string> */
+    protected array $sortableFields = ['created_at', 'category_name', 'service_name', 'old_price', 'new_price'];
+
     #[Url]
     public string $search_service = '';
 
@@ -32,7 +35,7 @@ new #[Title('Audit Trail Perubahan Harga')] class extends Component
         return PriceHistory::with('user')
             ->when($this->search_service !== '', fn ($q) => $q->where('service_name', 'like', '%' . $this->search_service . '%'))
             ->when($this->search_category !== '', fn ($q) => $q->where('category_name', 'like', '%' . $this->search_category . '%'))
-            ->orderBy($this->sortField, $this->sortDirection)
+            ->orderBy($this->safeSortField(), $this->safeSortDirection())
             ->paginate($this->perPage);
     }
 };

@@ -31,10 +31,7 @@
             {{-- 1. Master Pelanggan --}}
             <x-card class="bg-white border border-slate-200/80 shadow-xs">
                 <div class="flex items-center justify-between gap-3 mb-4">
-                    <div>
-                        <h2 class="text-sm sm:text-base font-semibold text-slate-900">1. Data Pelanggan</h2>
-                        <p class="text-xs text-slate-500">Pilih pelanggan terdaftar atau daftarkan pelanggan baru.</p>
-                    </div>
+                    <h2 class="text-sm sm:text-base font-semibold text-slate-900">1. Data Pelanggan</h2>
                     <x-button
                         type="button"
                         color="emerald"
@@ -51,7 +48,7 @@
 
                 <x-select.styled
                     label="Pelanggan"
-                    placeholder="Cari nama atau nomor telepon pelanggan..."
+                    placeholder="Cari nama pelanggan..."
                     searchable
                     wire:model.live="customer_id"
                     :options="$this->customerOptions"
@@ -79,10 +76,7 @@
             {{-- 2. Pemilihan Kategori, Layanan & Volume --}}
             <x-card class="bg-white border border-slate-200/80 shadow-xs">
                 <div class="flex items-center justify-between gap-3 mb-4">
-                    <div>
-                        <h2 class="text-sm sm:text-base font-semibold text-slate-900">2. Kategori, Layanan &amp; Volume</h2>
-                        <p class="text-xs text-slate-500">Harga dasar dihitung otomatis berdasarkan tarif aktif saat ini.</p>
-                    </div>
+                    <h2 class="text-sm sm:text-base font-semibold text-slate-900">2. Kategori, Layanan &amp; Volume</h2>
                     <x-button
                         type="button"
                         color="emerald"
@@ -180,7 +174,6 @@
             <x-card class="bg-white border border-slate-200/80 shadow-xs">
                 <div class="mb-4">
                     <h2 class="text-sm sm:text-base font-semibold text-slate-900">3. Diskon &amp; Biaya Tambahan</h2>
-                    <p class="text-xs text-slate-500">Opsional jika ada promo, pakaian sangat kotor, atau tenaga asisten tambahan.</p>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -212,13 +205,11 @@
                             label="Nilai Diskon"
                             value="0"
                             disabled
-                            hint="Pilih tipe diskon untuk mengaktifkan."
                         />
                     @endif
 
                     <x-currency
                         label="Biaya Tambahan Air (Opsional)"
-                        hint="Penyesuaian kondisi khusus, misal pakaian sangat kotor."
                         wire:model.live.debounce.250ms="extra_water_fee"
                         locale="id-ID"
                         :decimals="0"
@@ -227,7 +218,6 @@
 
                     <x-currency
                         label="Biaya Asisten (Opsional)"
-                        hint="Penanganan layanan khusus atau tambahan tenaga."
                         wire:model.live.debounce.250ms="assistant_fee"
                         locale="id-ID"
                         :decimals="0"

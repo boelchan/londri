@@ -38,7 +38,6 @@
                     <x-ti-filter-x class="size-4" aria-hidden="true" />
                 </x-button.circle>
             </div>
-            <span class="text-xs text-slate-500">Isi rentang tanggal jika ingin memfilter per tanggal spesifik.</span>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 {{ auth()->user()?->isAdmin() ? 'lg:grid-cols-5' : 'lg:grid-cols-4' }} gap-4">

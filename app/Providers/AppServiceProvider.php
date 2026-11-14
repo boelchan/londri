@@ -4,9 +4,14 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Http\Middleware\EnsureUserIsActive;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Blaze\Blaze;
+use Livewire\Livewire;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+use Spatie\Permission\Middleware\RoleMiddleware;
+use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
 use TallStackUi\Facades\TallStackUi;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +30,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
+
+        Livewire::addPersistentMiddleware([
+            EnsureUserIsActive::class,
+            RoleMiddleware::class,
+            PermissionMiddleware::class,
+            RoleOrPermissionMiddleware::class,
+        ]);
 
         Blaze::optimize()
             ->in(resource_path('views/components'))

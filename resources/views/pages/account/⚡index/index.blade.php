@@ -33,7 +33,6 @@
         <x-card class="bg-white border border-slate-200/80 shadow-xs">
             <div class="mb-4">
                 <h2 class="text-sm sm:text-base font-semibold text-slate-900">Ubah Kata Sandi</h2>
-                <p class="text-xs text-slate-500">Gunakan kata sandi yang kuat untuk keamanan akun.</p>
             </div>
 
             <form wire:submit="updatePassword" class="space-y-4">

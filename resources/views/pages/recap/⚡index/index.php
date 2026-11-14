@@ -23,6 +23,9 @@ new #[Title('Rekap Transaksi & Keuangan')] class extends Component
     public string $sortFieldDefault = 'created_at';
     public string $sortDirectionDefault = 'desc';
 
+    /** @var array<int, string> */
+    protected array $sortableFields = ['created_at', 'invoice_number', 'payment_status', 'grand_total'];
+
     #[Url]
     public string $filter_month = '';
 
@@ -220,7 +223,7 @@ new #[Title('Rekap Transaksi & Keuangan')] class extends Component
     {
         return $this->filteredTransactionQuery()
             ->with(['customer', 'user'])
-            ->orderBy($this->sortField, $this->sortDirection)
+            ->orderBy($this->safeSortField(), $this->safeSortDirection())
             ->paginate($this->perPage);
     }
 };

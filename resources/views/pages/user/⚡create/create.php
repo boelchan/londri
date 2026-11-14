@@ -32,7 +32,7 @@ new #[Title('Tambah Pengguna')] class extends Component
             'email' => 'required|email|max:191|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
             'phone' => 'nullable|string|max:30',
-            'role' => 'required|string',
+            'role' => 'required|in:' . implode(',', RolesEnum::values()),
             'status' => 'required|in:active,inactive',
         ], [
             'name.required' => 'Nama lengkap wajib diisi.',

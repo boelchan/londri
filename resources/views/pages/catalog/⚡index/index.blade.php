@@ -42,7 +42,6 @@
     <x-card class="bg-white border border-slate-200/80 shadow-xs" paddingless>
         <div class="px-5 py-4 border-b border-slate-200/80">
             <h2 class="text-sm sm:text-base font-semibold text-slate-900">Daftar Kategori Cucian</h2>
-            <p class="text-xs text-slate-500">Pilih tombol List Layanan pada kategori untuk mengelola tarif dan melihat histori harga.</p>
         </div>
 
         <div class="overflow-x-auto">
@@ -130,10 +129,7 @@
     {{-- Modal List Layanan per Kategori --}}
     <x-modal wire="servicesModal" :title="'Layanan Kategori: ' . $selectedCategoryName" size="3xl" center="sm">
         <div class="space-y-4">
-            <div class="flex items-center justify-between gap-2 pb-3 border-b border-slate-200">
-                <p class="text-xs text-slate-600">
-                    Kelola jenis layanan, ubah tarif harga, atau pantau histori perubahan harga layanan di kategori ini.
-                </p>
+            <div class="flex items-center justify-end gap-2 pb-3 border-b border-slate-200">
                 <x-button
                     color="emerald"
                     xs

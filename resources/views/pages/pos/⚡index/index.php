@@ -81,7 +81,7 @@ new #[Title('Kasir - Input Transaksi')] class extends Component
             ->orderBy('name')
             ->get()
             ->map(fn (Customer $customer): array => [
-                'label' => $customer->name . ' (' . $customer->phone . ') - ' . $customer->points . ' poin',
+                'label' => $customer->name,
                 'value' => $customer->id,
             ])
             ->all();

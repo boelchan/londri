@@ -21,6 +21,9 @@ new #[Title('Pengeluaran Kantor')] class extends Component
     public string $sortFieldDefault = 'expense_date';
     public string $sortDirectionDefault = 'desc';
 
+    /** @var array<int, string> */
+    protected array $sortableFields = ['expense_date', 'category', 'amount'];
+
     #[Url]
     public string $search_description = '';
 
@@ -104,7 +107,7 @@ new #[Title('Pengeluaran Kantor')] class extends Component
     {
         return $this->filteredQuery()
             ->with('user')
-            ->orderBy($this->sortField, $this->sortDirection)
+            ->orderBy($this->safeSortField(), $this->safeSortDirection())
             ->orderByDesc('id')
             ->paginate($this->perPage);
     }

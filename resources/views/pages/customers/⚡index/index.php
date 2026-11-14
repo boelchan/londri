@@ -23,6 +23,9 @@ new #[Title('Pelanggan & Poin Loyalitas')] class extends Component
     public string $sortFieldDefault = 'name';
     public string $sortDirectionDefault = 'asc';
 
+    /** @var array<int, string> */
+    protected array $sortableFields = ['name', 'phone', 'points'];
+
     #[Url]
     public string $search_name = '';
 
@@ -60,7 +63,7 @@ new #[Title('Pelanggan & Poin Loyalitas')] class extends Component
             ->withCount('laundryTransactions')
             ->when($this->search_name !== '', fn ($q) => $q->where('name', 'like', '%' . $this->search_name . '%'))
             ->when($this->search_phone !== '', fn ($q) => $q->where('phone', 'like', '%' . $this->search_phone . '%'))
-            ->orderBy($this->sortField, $this->sortDirection)
+            ->orderBy($this->safeSortField(), $this->safeSortDirection())
             ->paginate($this->perPage);
     }
 

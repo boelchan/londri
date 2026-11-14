@@ -49,12 +49,13 @@ new #[Title('Ubah Pengguna')] class extends Component
             'email' => 'required|email|max:191|unique:users,email,' . $this->id,
             'password' => 'nullable|string|min:6|confirmed',
             'phone' => 'nullable|string|max:30',
-            'role' => 'required|string',
+            'role' => 'required|in:' . implode(',', RolesEnum::values()),
             'status' => 'required|in:active,inactive',
         ]);
 
         $user = User::findOrFail($this->id);
         $wasActive = $user->status === 'active';
+        $oldRole = (string) ($user->roles->first()?->name ?? '');
 
         $user->update([
             'name' => $this->name,
@@ -73,7 +74,8 @@ new #[Title('Ubah Pengguna')] class extends Component
         $user->syncRoles([$this->role]);
 
         $deactivated = $wasActive && $this->status !== 'active';
-        if (($passwordChanged || $deactivated) && $user->id !== auth()->id()) {
+        $roleChanged = $oldRole !== $this->role;
+        if (($passwordChanged || $deactivated || $roleChanged) && $user->id !== auth()->id()) {
             $user->invalidateSessions();
         }
 

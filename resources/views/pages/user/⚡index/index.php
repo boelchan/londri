@@ -20,6 +20,9 @@ new #[Title('Kelola Pengguna')] class extends Component
     public string $sortFieldDefault = 'name';
     public string $sortDirectionDefault = 'asc';
 
+    /** @var array<int, string> */
+    protected array $sortableFields = ['name', 'email'];
+
     #[Url]
     public string $search_name = '';
 
@@ -44,7 +47,7 @@ new #[Title('Kelola Pengguna')] class extends Component
             ->when($this->search_email !== '', fn ($q) => $q->where('email', 'like', '%' . $this->search_email . '%'))
             ->when($this->search_role, fn ($q) => $q->whereHas('roles', fn ($rq) => $rq->where('name', $this->search_role)))
             ->when($this->search_status, fn ($q) => $q->where('status', $this->search_status))
-            ->orderBy($this->sortField, $this->sortDirection)
+            ->orderBy($this->safeSortField(), $this->safeSortDirection())
             ->paginate($this->perPage);
     }
 
